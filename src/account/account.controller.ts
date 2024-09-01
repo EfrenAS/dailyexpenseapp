@@ -11,6 +11,13 @@ export class AccountController {
     res.json({ msg: "Get an account by Id" });
   }
 
+  createAccount(req: Request, res: Response) {
+    //TODO: Create a new Account
+    res.json({
+      msg: "Account create successfully",
+    });
+  }
+
   updateAccountById(req: Request, res: Response) {
     //TODO: Get an account by Id
     res.json({ msg: "Update an account by Id" });
