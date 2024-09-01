@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 
 // Routes
 import { AccountRouter } from "./account/account.router";
+import { BillRouter } from "./bill/bill.router";
 
 dotenv.config();
 
@@ -21,7 +22,7 @@ class ServerBootstap {
   }
 
   private getRoutes(): Array<express.Router> {
-    return [new AccountRouter().router];
+    return [new AccountRouter().router, new BillRouter().router];
   }
 
   public runServer(): void {
