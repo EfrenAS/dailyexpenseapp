@@ -1,1 +1,1 @@
-export abstract class ConfigServer {}
+export abstract class ConfigServer { }

@@ -1,8 +1,8 @@
-import { BaseRouter } from "../config/base.router";
-import { OwnerController } from "./owner.controller";}
+import { BaseRouter } from '../config/base.router'
+import { OwnerController } from './owner.controller'
 
 export class OwnerRouter extends BaseRouter<OwnerController> {
-  constructor(){
+  constructor() {
     super(OwnerController)
   }
 

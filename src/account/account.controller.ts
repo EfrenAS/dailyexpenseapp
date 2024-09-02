@@ -1,30 +1,30 @@
-import { Request, Response } from "express";
+import { Request, Response } from 'express'
 
 export class AccountController {
-  allAcounts(req: Request, res: Response) {
-    //TODO: Get all accounts
-    res.json({ msg: "Hola desde mi Controlador de mi cuenta bancaria" });
+  allAcounts(req: Request, res: Response): void {
+    // TODO: Get all accounts
+    res.json({ msg: 'Hola desde mi Controlador de mi cuenta bancaria' })
   }
 
-  getAccountById(req: Request, res: Response) {
-    //TODO: Get an account by Id
-    res.json({ msg: "Get an account by Id" });
+  getAccountById(req: Request, res: Response): void {
+    // TODO: Get an account by Id
+    res.json({ msg: 'Get an account by Id' })
   }
 
-  createAccount(req: Request, res: Response) {
-    //TODO: Create a new Account
+  createAccount(req: Request, res: Response): void {
+    // TODO: Create a new Account
     res.json({
-      msg: "Account create successfully",
-    });
+      msg: 'Account create successfully'
+    })
   }
 
-  updateAccountById(req: Request, res: Response) {
-    //TODO: Get an account by Id
-    res.json({ msg: "Update an account by Id" });
+  updateAccountById(req: Request, res: Response): void {
+    // TODO: Get an account by Id
+    res.json({ msg: 'Update an account by Id' })
   }
 
-  deleteAccountById(req: Request, res: Response) {
+  deleteAccountById(req: Request, res: Response): void {
     // TODO: Delete Account by Id
-    res.json({ msg: "Delete an account by Id" });
+    res.json({ msg: 'Delete an account by Id' })
   }
 }

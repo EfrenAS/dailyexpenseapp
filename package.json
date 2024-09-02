@@ -30,6 +30,11 @@
     "project": "./tsconfig.json"
   },
   "eslintConfig": {
-    "extends": "ts-standard"
+    "parserOptions": {
+      "project": "./tsconfig.json"
+    },
+    "extends": [
+      "./node_modules/ts-standard/eslintrc.json"
+    ]
   }
 }

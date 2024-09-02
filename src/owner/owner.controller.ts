@@ -1,33 +1,33 @@
-import { Request, Response } from "express";
+import { Request, Response } from 'express'
 
 export class OwnerController {
-  getAllOwners(req: Request, res: Response) {
+  getAllOwners(req: Request, res: Response): void {
     res.json({
-      msg: "Get all owners from DB",
-    });
+      msg: 'Get all owners from DB'
+    })
   }
 
-  getOwnerById(req: Request, res: Response) {
+  getOwnerById(req: Request, res: Response): void {
     res.json({
-      msg: "Get an owner from Db by Id",
-    });
+      msg: 'Get an owner from Db by Id'
+    })
   }
 
-  createOwner(req: Request, res: Response) {
+  createOwner(req: Request, res: Response): void {
     res.json({
-      msg: "Create a new Owner into DB",
-    });
+      msg: 'Create a new Owner into DB'
+    })
   }
 
-  updateOwnerbyId(req: Request, res: Response) {
+  updateOwnerbyId(req: Request, res: Response): void {
     res.json({
-      msg: "Update an owner partially",
-    });
+      msg: 'Update an owner partially'
+    })
   }
 
-  deleteOwnerById(req: Request, res: Response) {
+  deleteOwnerById(req: Request, res: Response): void {
     res.json({
-      msg: "Delete an owner of DB",
-    });
+      msg: 'Delete an owner of DB'
+    })
   }
 }
