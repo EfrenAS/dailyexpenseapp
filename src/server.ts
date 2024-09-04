@@ -12,7 +12,7 @@ dotenv.config()
 
 class ServerBootstap {
   public app: express.Application = express()
-  private readonly port: number = Number(process.env.SERVER_PORT) || 8000
+  private readonly port: number = +process.env.SERVER_PORT || 8000
 
   constructor() {
     this.app.disable('x-powered-by')

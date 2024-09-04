@@ -1,4 +1,4 @@
-import { BaseRouter } from '../config/base.router'
+import { BaseRouter } from '../config/base/base.router'
 import { BillController } from './bill.controller'
 
 export class BillRouter extends BaseRouter<BillController> {

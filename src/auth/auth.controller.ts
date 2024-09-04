@@ -17,6 +17,8 @@ export class AuthController {
 
   register(req: Request, res: Response): void {
     // TODO: Implement code for create an account for use the app
+    console.log('Hola desde el controlador resgister')
+
     res.send({
       msg: 'User is registered successfully'
     })
