@@ -1,9 +1,12 @@
 import { Request, Response } from 'express'
 import { BillService } from './bill.service'
+import { billSchema, partialbillSchema } from './bill.schema'
+import { ZodError } from 'zod'
 
 export class BillController {
   constructor(
-    private readonly billService: BillService = new BillService()
+    private readonly billService: BillService = new BillService(),
+    private zodError: ZodError
   ) { }
 
   getAllBills(req: Request, res: Response): void {
@@ -21,18 +24,30 @@ export class BillController {
     })
   }
 
-  createBill(req: Request, res: Response): void {
-    // TODO: Implement code for create a new Bill on DB
-    res.json({
-      msg: 'Create a new Bill on DB'
-    })
+  createBill(req: Request, res: Response): Response {
+    try {
+      const validatedData = billSchema.parse(req.body)
+      return res.json({
+        msg: 'Data is validated successfully',
+        data: validatedData
+      })
+    } catch (e) {
+      this.zodError = e as ZodError
+      return res.status(400).json(this.zodError.errors)
+    }
   }
 
-  updateBillById(req: Request, res: Response): void {
-    // TODO: Implement code for update a Bill by Id
-    res.json({
-      msg: 'Update a bill on DB'
-    })
+  updateBillById(req: Request, res: Response): Response {
+    try {
+      const validateData = partialbillSchema.parse(req.body)
+      return res.json({
+        msg: 'Update a bill on DB',
+        data: validateData
+      })
+    } catch (e) {
+      this.zodError = e as ZodError
+      return res.status(400).json(this.zodError.errors)
+    }
   }
 
   deleteBillById(req: Request, res: Response): void {

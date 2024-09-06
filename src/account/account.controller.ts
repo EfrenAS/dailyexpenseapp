@@ -1,9 +1,16 @@
 import { Request, Response } from 'express'
 import { AccountService } from './account.service'
+import { ZodError } from 'zod'
+import { accountSchema, partialAccountSchema } from './account.schema'
+import { partialbillSchema } from '../bill/bill.schema'
 
 export class AccountController {
-  constructor (private readonly accountService: AccountService = new AccountService()) { }
-  allAcounts (req: Request, res: Response): void {
+  constructor(
+    private readonly accountService: AccountService = new AccountService(),
+    private zodError: ZodError
+  ) { }
+
+  allAcounts(req: Request, res: Response): void {
     const data = this.accountService.findAllAccounts()
     res.json({
       action: 'Succes',
@@ -11,24 +18,38 @@ export class AccountController {
     })
   }
 
-  getAccountById (req: Request, res: Response): void {
+  getAccountById(req: Request, res: Response): void {
     // TODO: Get an account by Id
     res.json({ msg: 'Get an account by Id' })
   }
 
-  createAccount (req: Request, res: Response): void {
-    // TODO: Create a new Account
-    res.json({
-      msg: 'Account create successfully'
-    })
+  createAccount(req: Request, res: Response): Response {
+    try {
+      const validatedData = accountSchema.parse(req.body)
+      return res.json({
+        msg: 'Account create successfully',
+        data: validatedData
+      })
+    } catch (e) {
+      this.zodError = e as ZodError
+      return res.status(400).send(this.zodError.errors)
+    }
   }
 
-  updateAccountById (req: Request, res: Response): void {
-    // TODO: Get an account by Id
-    res.json({ msg: 'Update an account by Id' })
+  updateAccountById(req: Request, res: Response): Response {
+    try {
+      const validatedData = partialAccountSchema.parse(req.body)
+      return res.json({
+        msg: 'Account update successfully',
+        data: validatedData
+      })
+    } catch (e) {
+      this.zodError = e as ZodError
+      return res.status(400).send(this.zodError.errors)
+    }
   }
 
-  deleteAccountById (req: Request, res: Response): void {
+  deleteAccountById(req: Request, res: Response): void {
     // TODO: Delete Account by Id
     res.json({ msg: 'Delete an account by Id' })
   }
