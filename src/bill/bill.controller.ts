@@ -1,11 +1,17 @@
 import { Request, Response } from 'express'
+import { BillService } from './bill.service'
 
 export class BillController {
+  constructor(
+    private readonly billService: BillService = new BillService()
+  ) { }
+
   getAllBills(req: Request, res: Response): void {
+    const bills = this.billService.findAllBills()
     res.json({
-      msg: 'Get All Bills from DB'
+      action: 'success',
+      msg: bills
     })
-    // TODO: Implement code for Get All Users of DB
   }
 
   getBillById(req: Request, res: Response): void {

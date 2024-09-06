@@ -1,9 +1,17 @@
 import { Request, Response } from 'express'
+import { OwnerService } from './owner.service'
 
 export class OwnerController {
+  constructor(
+    private readonly ownerService: OwnerService = new OwnerService()
+  ) { }
+
   getAllOwners(req: Request, res: Response): void {
+    const data = this.ownerService.findAllOwners()
+
     res.json({
-      msg: 'Get all owners from DB'
+      action: 'Success',
+      msg: data
     })
   }
 
