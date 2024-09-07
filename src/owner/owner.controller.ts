@@ -1,5 +1,7 @@
 import { Request, Response } from 'express'
 import { OwnerService } from './owner.service'
+import { ownerSchema, partialOwnerSchema } from './owner.schema'
+import { ZodError } from 'zod'
 
 export class OwnerController {
   constructor(
@@ -21,16 +23,30 @@ export class OwnerController {
     })
   }
 
-  createOwner(req: Request, res: Response): void {
-    res.json({
-      msg: 'Create a new Owner into DB'
-    })
+  createOwner(req: Request, res: Response): Response {
+    try {
+      const validateData = ownerSchema.parse(req.body)
+      return res.status(201).json({
+        msg: 'Create a new Owner into DB',
+        data: validateData
+      })
+    } catch (e) {
+      const zodError = e as ZodError
+      return res.status(400).json(zodError.errors)
+    }
   }
 
-  updateOwnerbyId(req: Request, res: Response): void {
-    res.json({
-      msg: 'Update an owner partially'
-    })
+  updateOwnerbyId(req: Request, res: Response): Response {
+    try {
+      const validateData = partialOwnerSchema.parse(req.body)
+      return res.json({
+        msg: 'Create a new Owner into DB',
+        data: validateData
+      })
+    } catch (e) {
+      const zodError = e as ZodError
+      return res.status(400).json(zodError.errors)
+    }
   }
 
   deleteOwnerById(req: Request, res: Response): void {

@@ -2,12 +2,10 @@ import { Request, Response } from 'express'
 import { AccountService } from './account.service'
 import { ZodError } from 'zod'
 import { accountSchema, partialAccountSchema } from './account.schema'
-import { partialbillSchema } from '../bill/bill.schema'
 
 export class AccountController {
   constructor(
-    private readonly accountService: AccountService = new AccountService(),
-    private zodError: ZodError
+    private readonly accountService: AccountService = new AccountService()
   ) { }
 
   allAcounts(req: Request, res: Response): void {
@@ -26,13 +24,13 @@ export class AccountController {
   createAccount(req: Request, res: Response): Response {
     try {
       const validatedData = accountSchema.parse(req.body)
-      return res.json({
+      return res.status(201).json({
         msg: 'Account create successfully',
         data: validatedData
       })
     } catch (e) {
-      this.zodError = e as ZodError
-      return res.status(400).send(this.zodError.errors)
+      const zodError = e as ZodError
+      return res.status(400).send(zodError.errors)
     }
   }
 
@@ -44,8 +42,8 @@ export class AccountController {
         data: validatedData
       })
     } catch (e) {
-      this.zodError = e as ZodError
-      return res.status(400).send(this.zodError.errors)
+      const zodError = e as ZodError
+      return res.status(400).send(zodError.errors)
     }
   }
 

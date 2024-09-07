@@ -5,8 +5,7 @@ import { ZodError } from 'zod'
 
 export class BillController {
   constructor(
-    private readonly billService: BillService = new BillService(),
-    private zodError: ZodError
+    private readonly billService: BillService = new BillService()
   ) { }
 
   getAllBills(req: Request, res: Response): void {
@@ -27,13 +26,13 @@ export class BillController {
   createBill(req: Request, res: Response): Response {
     try {
       const validatedData = billSchema.parse(req.body)
-      return res.json({
+      return res.status(201).json({
         msg: 'Data is validated successfully',
         data: validatedData
       })
     } catch (e) {
-      this.zodError = e as ZodError
-      return res.status(400).json(this.zodError.errors)
+      const zodError = e as ZodError
+      return res.status(400).json(zodError.errors)
     }
   }
 
@@ -45,8 +44,8 @@ export class BillController {
         data: validateData
       })
     } catch (e) {
-      this.zodError = e as ZodError
-      return res.status(400).json(this.zodError.errors)
+      const zodError = e as ZodError
+      return res.status(400).json(zodError.errors)
     }
   }
 
