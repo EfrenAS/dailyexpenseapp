@@ -1,8 +1,12 @@
 import { BillEntity } from './bill.entity'
+import { BillRepository } from './bill.repository'
 
 export class BillService {
-  findAllBills(): string {
-    return 'All Bills from Bill Services'
+  async findAllBills(): Promise<BillEntity[]> {
+    const billRepository = new BillRepository()
+    const response = await billRepository.findAll()
+    console.log(response)
+    return response
   }
 
   findBillById({ id }: { id: string }): string {

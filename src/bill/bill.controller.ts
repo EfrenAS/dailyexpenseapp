@@ -8,8 +8,8 @@ export class BillController {
     private readonly billService: BillService = new BillService()
   ) { }
 
-  getAllBills(req: Request, res: Response): void {
-    const bills = this.billService.findAllBills()
+  async getAllBills(req: Request, res: Response): Promise<void> {
+    const bills = await this.billService.findAllBills()
     res.json({
       action: 'success',
       msg: bills
