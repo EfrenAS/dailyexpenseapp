@@ -10,6 +10,7 @@ export class BillController {
 
   async getAllBills(req: Request, res: Response): Promise<void> {
     const bills = await this.billService.findAllBills()
+    console.log(bills)
     res.json({
       action: 'success',
       msg: bills

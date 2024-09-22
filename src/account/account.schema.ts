@@ -25,3 +25,6 @@ export const accountSchema = z.object({
 })
 
 export const partialAccountSchema = accountSchema.partial()
+
+export type CreateAccount = z.infer<typeof accountSchema>
+export type UpdatePartialAccount = z.infer<typeof partialAccountSchema>

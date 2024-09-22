@@ -1,8 +1,13 @@
 import { OwnerEntity } from './owner.entity'
+import { OwnerRepository } from './owner.repository'
+import { mapEmptyOwnerEntityToOwnerEmpty } from '../utils/mappers'
 
 export class OwnerService {
-  findAllOwners(): string {
-    return 'All Owners from Owner Services'
+  async findAllOwners(): Promise<OwnerEntity[] | []> {
+    const emptyOwner = mapEmptyOwnerEntityToOwnerEmpty()
+    const ownerRepository = new OwnerRepository(emptyOwner)
+    const ownersArray = await ownerRepository.findAll()
+    return ownersArray
   }
 
   findOwnerById({ id }: { id: string }): string {

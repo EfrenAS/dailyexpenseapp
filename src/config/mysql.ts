@@ -1,7 +1,7 @@
-import mysql, { Connection, ConnectionOptions, ResultSetHeader } from 'mysql2/promise'
+import mysql, { Connection, ConnectionOptions, ResultSetHeader, RowDataPacket } from 'mysql2/promise'
 import { Config } from './config'
 
-export class MySQL<T extends ResultSetHeader> {
+export class MySQL {
   private readonly access: ConnectionOptions = Config
 
   async getConnection(): Promise<Connection> {
@@ -12,13 +12,11 @@ export class MySQL<T extends ResultSetHeader> {
     }
   }
 
-  // async getQuery() { }
-
   // For SELECT
-  async execQuery(): Promise<T[]> {
+  async execQuery({ queryToExec }: { queryToExec: string }): Promise<RowDataPacket[]> {
     try {
       const connection = await this.getConnection()
-      const [resultQuery] = await connection.query<T[]>('SELECT * FROM `users`;')
+      const [resultQuery] = await connection.query<RowDataPacket[]>(queryToExec)
       return resultQuery
     } catch (e) {
       throw new Error('Error al tratar de consultar la Base de Datos')

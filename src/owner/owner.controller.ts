@@ -8,12 +8,12 @@ export class OwnerController {
     private readonly ownerService: OwnerService = new OwnerService()
   ) { }
 
-  getAllOwners(req: Request, res: Response): void {
-    const data = this.ownerService.findAllOwners()
+  async getAllOwners(req: Request, res: Response): Promise<void> {
+    const ownersSelected = await this.ownerService.findAllOwners()
 
     res.json({
       action: 'Success',
-      msg: data
+      body: ownersSelected
     })
   }
 

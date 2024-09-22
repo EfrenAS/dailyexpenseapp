@@ -9,3 +9,10 @@ export enum typeBill {
   EXPENSE = 'expense',
   DEPOSTI = 'deposit'
 }
+
+export enum sqlVerbs {
+  SELECT = 'SELECT',
+  INSERT = 'INSERT',
+  UPDATE = 'UPDATE',
+  DELETE = 'DELETE'
+}

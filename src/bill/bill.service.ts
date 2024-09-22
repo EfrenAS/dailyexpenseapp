@@ -3,9 +3,9 @@ import { BillRepository } from './bill.repository'
 
 export class BillService {
   async findAllBills(): Promise<BillEntity[]> {
-    const billRepository = new BillRepository()
+    const newBill = new BillEntity()
+    const billRepository = new BillRepository(newBill)
     const response = await billRepository.findAll()
-    console.log(response)
     return response
   }
 

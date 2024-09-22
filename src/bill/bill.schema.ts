@@ -38,3 +38,5 @@ export const billSchema = z.object({
 })
 
 export const partialbillSchema = billSchema.partial()
+export type CreateBill = z.infer<typeof billSchema>
+export type UpdatePartialBill = z.infer<typeof partialbillSchema>

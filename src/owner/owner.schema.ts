@@ -35,3 +35,6 @@ export const ownerSchema = z.object({
 })
 
 export const partialOwnerSchema = ownerSchema.partial()
+
+export type CreateOwner = z.infer<typeof ownerSchema>
+export type UpdatePartialOwner = z.infer<typeof partialOwnerSchema>

@@ -1,8 +1,13 @@
 import { AccountEntity } from './account.entity'
+import { AccountRepository } from './account.repository'
+import { mapEmptyAccountEntityToAccountEmpty } from './account.mapper'
 
 export class AccountService {
-  findAllAccounts(): string {
-    return 'All Accounts from Account Services'
+  async findAllAccounts(): Promise<AccountEntity[]> {
+    const emptyAccount = mapEmptyAccountEntityToAccountEmpty()
+    const accountRepository = new AccountRepository(emptyAccount)
+    const acountsArray = await accountRepository.findAll()
+    return acountsArray
   }
 
   findAccountById({ id }: { id: string }): string {

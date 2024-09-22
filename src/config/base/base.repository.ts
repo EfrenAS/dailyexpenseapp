@@ -1,33 +1,36 @@
-import { ResultSetHeader } from 'mysql2/promise'
 import { MySQL } from '../mysql'
+import { SqlQueryBuilder } from '../../utils/sqlQueryBuilder'
 
-export abstract class BaseRepository<T extends ResultSetHeader> {
-  private readonly mysql: MySQL<T> = new MySQL<T>()
+export abstract class BaseRepository<T> {
+  private readonly mysqlConnection: MySQL = new MySQL()
+  private readonly tableName: string
 
-  private readonly table: string = ''
-
-  get tableName(): string {
-    return 'bill'
+  constructor(nameEntity: string) {
+    this.tableName = nameEntity
   }
 
-  get query(): string {
-    return 'Query'
-  }
+  abstract getColumns(): string[]
 
-  create(): void { }
+  abstract getParams(): string[]
 
-  update(): void { }
+  create(params: T): void { }
+
+  update(params: T): void { }
 
   async findAll(): Promise<T[]> {
     try {
-      const dataSelected = await this.mysql.execQuery()
-      return dataSelected
+      const query = new SqlQueryBuilder()
+        .select(this.getColumns())
+        .from(this.tableName)
+        .build()
+      const selectResponse = await this.mysqlConnection.execQuery({ queryToExec: query })
+      return selectResponse as T[]
     } catch (e) {
-      throw new Error('Error al tratar de conectar con la Base de Datos')
+      throw new Error('No se pudo realizar la búsqueda en la tabla seleccionada')
     }
   }
 
-  findByOne(): void { }
+  findByOne({ id }: { id: string }): void { }
 
-  delete(): void { }
+  delete({ id }: { id: string }): void { }
 }

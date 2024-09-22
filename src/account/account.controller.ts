@@ -8,11 +8,11 @@ export class AccountController {
     private readonly accountService: AccountService = new AccountService()
   ) { }
 
-  allAcounts(req: Request, res: Response): void {
-    const data = this.accountService.findAllAccounts()
+  async allAcounts(_req: Request, res: Response): Promise<void> {
+    const response = await this.accountService.findAllAccounts()
     res.json({
-      action: 'Succes',
-      accounts: data
+      action: 'Success',
+      body: response
     })
   }
 
