@@ -4,39 +4,48 @@ import { ownerSchema, partialOwnerSchema } from './owner.schema'
 import { ZodError } from 'zod'
 
 export class OwnerController {
-  constructor(
+  constructor (
     private readonly ownerService: OwnerService = new OwnerService()
   ) { }
 
-  async getAllOwners(req: Request, res: Response): Promise<void> {
+  async getAllOwners (req: Request, res: Response): Promise<void> {
     const ownersSelected = await this.ownerService.findAllOwners()
 
     res.json({
-      action: 'Success',
-      body: ownersSelected
+      response: 'Success',
+      data: ownersSelected
     })
   }
 
-  getOwnerById(req: Request, res: Response): void {
+  getOwnerById (req: Request, res: Response): void {
     res.json({
       msg: 'Get an owner from Db by Id'
     })
   }
 
-  createOwner(req: Request, res: Response): Response {
+  async createOwner (req: Request, res: Response): Promise<void> {
     try {
-      const validateData = ownerSchema.parse(req.body)
-      return res.status(201).json({
-        msg: 'Create a new Owner into DB',
-        data: validateData
+      const validateReqBody = ownerSchema.parse(req.body)
+      const createdOwner = await this.ownerService.createOwner(validateReqBody)
+      if (createdOwner === null) {
+        res.status(400).json({
+          response: 'Error',
+          message: 'Error creating owner'
+        })
+      }
+
+      res.status(201).json({
+        response: 'Success',
+        data: createdOwner
       })
     } catch (e) {
+      console.log(e)
       const zodError = e as ZodError
-      return res.status(400).json(zodError.errors)
+      res.status(400).json(zodError.errors)
     }
   }
 
-  updateOwnerbyId(req: Request, res: Response): Response {
+  updateOwnerbyId (req: Request, res: Response): Response {
     try {
       const validateData = partialOwnerSchema.parse(req.body)
       return res.json({
@@ -49,7 +58,7 @@ export class OwnerController {
     }
   }
 
-  deleteOwnerById(req: Request, res: Response): void {
+  deleteOwnerById (req: Request, res: Response): void {
     res.json({
       msg: 'Delete an owner of DB'
     })

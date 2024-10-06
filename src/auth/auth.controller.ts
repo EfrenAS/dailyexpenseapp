@@ -1,21 +1,21 @@
 import { Request, Response } from 'express'
 
 export class AuthController {
-  login(req: Request, res: Response): void {
+  login (req: Request, res: Response): void {
     // TODO: Implement code for login module
     res.send({
       msg: 'Login successfully'
     })
   }
 
-  logout(req: Request, res: Response): void {
+  logout (req: Request, res: Response): void {
     // TODO: Implement code for logout module
     res.send({
       msg: 'Logout successfully'
     })
   }
 
-  register(req: Request, res: Response): void {
+  register (req: Request, res: Response): void {
     // TODO: Implement code for create an account for use the app
     console.log('Hola desde el controlador resgister')
 
@@ -24,7 +24,7 @@ export class AuthController {
     })
   }
 
-  getProfileById(req: Request, res: Response): void {
+  getProfileById (req: Request, res: Response): void {
     // TODO: Implement code for get info a profile
     res.send({
       msg: 'Complete info of a Profile'

@@ -4,29 +4,38 @@ import { ZodError } from 'zod'
 import { accountSchema, partialAccountSchema } from './account.schema'
 
 export class AccountController {
-  constructor(
+  constructor (
     private readonly accountService: AccountService = new AccountService()
   ) { }
 
-  async allAcounts(_req: Request, res: Response): Promise<void> {
+  async allAcounts (_req: Request, res: Response): Promise<void> {
     const response = await this.accountService.findAllAccounts()
     res.json({
-      action: 'Success',
-      body: response
+      response: 'Success',
+      data: response
     })
   }
 
-  getAccountById(req: Request, res: Response): void {
+  getAccountById (req: Request, res: Response): void {
     // TODO: Get an account by Id
     res.json({ msg: 'Get an account by Id' })
   }
 
-  createAccount(req: Request, res: Response): Response {
+  async newAccount (req: Request, res: Response): Promise< Response > {
     try {
       const validatedData = accountSchema.parse(req.body)
+      const createdAccount = await this.accountService.createAccount(validatedData)
+
+      if (createdAccount === null) {
+        res.status(400).json({
+          response: 'Error',
+          message: 'Account cannot be created'
+        })
+      }
+
       return res.status(201).json({
         msg: 'Account create successfully',
-        data: validatedData
+        data: createdAccount
       })
     } catch (e) {
       const zodError = e as ZodError
@@ -34,7 +43,7 @@ export class AccountController {
     }
   }
 
-  updateAccountById(req: Request, res: Response): Response {
+  updateAccountById (req: Request, res: Response): Response {
     try {
       const validatedData = partialAccountSchema.parse(req.body)
       return res.json({
@@ -47,7 +56,7 @@ export class AccountController {
     }
   }
 
-  deleteAccountById(req: Request, res: Response): void {
+  deleteAccountById (req: Request, res: Response): void {
     // TODO: Delete Account by Id
     res.json({ msg: 'Delete an account by Id' })
   }

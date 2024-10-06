@@ -4,7 +4,7 @@ import { Config } from './config'
 export class MySQL {
   private readonly access: ConnectionOptions = Config
 
-  async getConnection(): Promise<Connection> {
+  async getConnection (): Promise<Connection> {
     try {
       return await mysql.createConnection(this.access)
     } catch (e) {
@@ -13,10 +13,10 @@ export class MySQL {
   }
 
   // For SELECT
-  async execQuery({ queryToExec }: { queryToExec: string }): Promise<RowDataPacket[]> {
+  async execQuery ({ query }: { query: string }): Promise<RowDataPacket[]> {
     try {
       const connection = await this.getConnection()
-      const [resultQuery] = await connection.query<RowDataPacket[]>(queryToExec)
+      const [resultQuery] = await connection.query<RowDataPacket[]>(query)
       return resultQuery
     } catch (e) {
       throw new Error('Error al tratar de consultar la Base de Datos')
@@ -24,16 +24,20 @@ export class MySQL {
   }
 
   // For INSERT, DELETE, UPDATE
-  async exectStatement(): Promise<[ResultSetHeader, any]> {
+  async exectStatement (
+    {
+      query,
+      values
+    }:
+    { query: string
+      values: string[]
+    }
+  ): Promise<[ResultSetHeader, any]> {
     try {
       const connection = await this.getConnection()
-      return await connection.execute<ResultSetHeader>('INSERT INTO `users`(`id`, `username`, `email`, `password`) VALUES ((?), (?), (?), (?))', [
-        'asdasd123123sa',
-        'administrator',
-        'admint.test@gmail.com',
-        'admin'
-      ])
+      return await connection.execute<ResultSetHeader>(query, values)
     } catch (e) {
+      console.log(e)
       throw new Error('Error al tratar de modificar la base de datos')
     }
   }

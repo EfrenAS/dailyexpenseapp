@@ -19,7 +19,7 @@ export const billSchema = z.object({
   comment: z.string({
     invalid_type_error: 'Must comment must be string'
   }).trim().optional(),
-  account: z.string({
+  account_id: z.string({
     invalid_type_error: 'Must account must be string',
     required_error: 'Account is required'
   }),

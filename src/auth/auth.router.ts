@@ -2,11 +2,11 @@ import { BaseRouter } from '../config/base/base.router'
 import { AuthController } from './auth.controller'
 
 export class AuthRouter extends BaseRouter<AuthController> {
-  constructor() {
+  constructor () {
     super(AuthController)
   }
 
-  routes(): void {
+  routes (): void {
     this.router.post('/auth/login', (req, res) =>
       this.controller.login(req, res)
     )

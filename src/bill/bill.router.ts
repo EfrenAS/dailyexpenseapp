@@ -2,13 +2,13 @@ import { BaseRouter } from '../config/base/base.router'
 import { BillController } from './bill.controller'
 
 export class BillRouter extends BaseRouter<BillController> {
-  constructor() {
+  constructor () {
     super(BillController)
   }
 
-  routes(): void {
-    this.router.get('/bill', (req, res) =>
-      this.controller.getAllBills(req, res)
+  routes (): void {
+    this.router.get('/bill', async (req, res) =>
+      await this.controller.getAllBills(req, res)
     )
 
     this.router.get('/bill/:id', (req, res) =>

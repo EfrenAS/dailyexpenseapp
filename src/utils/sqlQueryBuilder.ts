@@ -3,34 +3,43 @@ import { sqlVerbs } from './enums'
 export class SqlQueryBuilder {
   private query: string
   private readonly hasWhereClause: boolean
-  private readonly columns: string[] | null
-  private table: string | null
 
-  constructor() {
+  constructor () {
     this.query = ''
     this.hasWhereClause = false
-    this.columns = null
-    this.table = null
   }
 
-  select(columns: string[]): this {
-    const columnList = columns.join(', ')
-    this.query = `${sqlVerbs.SELECT} ${columnList}`
+  params (params: string[]): this {
+    this.query += ` VALUES ( ${params.join(', ')} )`
     return this
   }
 
-  from(table: string): this {
-    this.table = table
-    this.query += ` FROM ${this.table}`
+  columns (columnList: string[]): string {
+    const columns = columnList.join(', ')
+    return columns
+  }
+
+  insertInto ({ table, columns }: { table: string, columns: string[] }): this {
+    this.query = `${sqlVerbs.INSERT} INTO ${table} ( ${this.columns(columns)} )`
     return this
   }
 
-  where({ condition }: { condition: string }): this {
+  select (columns: string[]): this {
+    this.query = `${sqlVerbs.SELECT} ${this.columns(columns)}`
+    return this
+  }
+
+  from (table: string): this {
+    this.query += ` FROM ${table}`
+    return this
+  }
+
+  where ({ condition }: { condition: string }): this {
     this.query += ` WHERE ${condition}`
     return this
   }
 
-  build(): string {
+  build (): string {
     return this.query + ';'
   }
 }

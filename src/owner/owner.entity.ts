@@ -12,3 +12,4 @@ export class OwnerEntity extends BaseEntity {
 }
 
 export const OWNER_ENTITY = 'owners'
+export const PRIMARY_KEY_TO_UUID = true

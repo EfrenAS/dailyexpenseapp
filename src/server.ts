@@ -14,7 +14,7 @@ class ServerBootstap {
   public app: express.Application = express()
   private readonly port: number = Number(process.env.SERVER_PORT) || 8000
 
-  constructor() {
+  constructor () {
     this.app.disable('x-powered-by')
     this.app.use(express.json())
     this.app.use(express.urlencoded({ extended: true }))
@@ -23,7 +23,7 @@ class ServerBootstap {
     this.runServer()
   }
 
-  private getRoutes(): express.Router[] {
+  private getRoutes (): express.Router[] {
     return [
       new AuthRouter().router,
       new AccountRouter().router,
@@ -32,7 +32,7 @@ class ServerBootstap {
     ]
   }
 
-  public runServer(): void {
+  public runServer (): void {
     this.app.listen(this.port, () =>
       console.log(`Server is running on port: ${this.port}`)
     )

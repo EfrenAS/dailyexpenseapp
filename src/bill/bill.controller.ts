@@ -4,27 +4,26 @@ import { billSchema, partialbillSchema } from './bill.schema'
 import { ZodError } from 'zod'
 
 export class BillController {
-  constructor(
+  constructor (
     private readonly billService: BillService = new BillService()
   ) { }
 
-  async getAllBills(req: Request, res: Response): Promise<void> {
+  async getAllBills (req: Request, res: Response): Promise<void> {
     const bills = await this.billService.findAllBills()
-    console.log(bills)
     res.json({
-      action: 'success',
-      msg: bills
+      response: 'success',
+      data: bills
     })
   }
 
-  getBillById(req: Request, res: Response): void {
+  getBillById (req: Request, res: Response): void {
     // TODO: Implement code for Get All Users of DB
     res.json({
       msg: 'Get A Bill from DB by Id'
     })
   }
 
-  createBill(req: Request, res: Response): Response {
+  createBill (req: Request, res: Response): Response {
     try {
       const validatedData = billSchema.parse(req.body)
       return res.status(201).json({
@@ -37,7 +36,7 @@ export class BillController {
     }
   }
 
-  updateBillById(req: Request, res: Response): Response {
+  updateBillById (req: Request, res: Response): Response {
     try {
       const validateData = partialbillSchema.parse(req.body)
       return res.json({
@@ -50,7 +49,7 @@ export class BillController {
     }
   }
 
-  deleteBillById(req: Request, res: Response): void {
+  deleteBillById (req: Request, res: Response): void {
     // TODO: Implement code for Delete a Bill by Id on DB
     res.json({
       msg: 'Delete a bill of DB'

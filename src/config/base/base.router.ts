@@ -8,11 +8,11 @@ export class BaseRouter<T> {
   protected controller: T
   // protected Middeware: M -----> will be implement
 
-  constructor(TController: new () => T) {
+  constructor (TController: new () => T) {
     this.router = Router()
     this.controller = new TController()
     this.routes()
   }
 
-  protected routes(): void { }
+  protected routes (): void { }
 }
